@@ -1,0 +1,1778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sketch Factory - Creative Pathshala</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f3f0;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 44px;
+            width: auto;
+            display: block;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #843996 0%, #08425c 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid white;
+            border-radius: 50%;
+            transform: translate(-3px, -3px);
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: white;
+            border-radius: 50%;
+            transform: translate(5px, 5px);
+            opacity: 0.6;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: #1a1a1a;
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        .logo-subtitle {
+            font-size: 11px;
+            color: #666;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #843996;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #08425c;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #08425c;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px 30px;
+            overflow: hidden;
+        }
+
+        /* Grid Background */
+        .grid-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 600px;
+            background-image: 
+                linear-gradient(rgba(132, 57, 150, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(132, 57, 150, 0.08) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Main Title */
+        .hero-title {
+            font-size: clamp(48px, 8vw, 120px);
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.1;
+            margin-bottom: 0;
+            position: relative;
+            z-index: 1;
+            letter-spacing: -2px;
+        }
+
+        .title-sketch {
+            color: #1a1a1a;
+            display: block;
+        }
+
+        .title-animate {
+            color: #08425c;
+            display: block;
+        }
+
+        .title-animate .highlight {
+            color: #843996;
+        }
+
+        /* Interactive Gallery */
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 420px;
+            margin-top: -40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .gallery-item {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .gallery-item:hover {
+            z-index: 10;
+        }
+
+        /* No scaling on hover — the reveal lens is the interaction,
+           and scaling would offset the clip-path / cursor mapping. */
+
+        /* Image containers with reveal effect */
+        .image-wrapper {
+            position: relative;
+            animation: floaty 6s ease-in-out infinite;
+        }
+
+        @keyframes floaty {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50%      { transform: translateY(-18px) rotate(0.6deg); }
+        }
+
+        /* Vary the float so the three pieces drift independently */
+        .item-dino .image-wrapper   { animation-duration: 5.5s; animation-delay: -1s; }
+        .item-car .image-wrapper    { animation-duration: 7s;   animation-delay: -3s; }
+        .item-island .image-wrapper { animation-duration: 6.2s; animation-delay: -2s; }
+
+        .image-wrapper img {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: all 0.6s ease;
+        }
+
+        .sketch-img {
+            filter: contrast(1.05);
+        }
+
+        .color-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+            /* Fully clipped by default; JS opens a square window at the cursor.
+               No CSS transition — a rAF loop drives the clip for a smooth, lag-free follow. */
+            clip-path: inset(50% 50% 50% 50%);
+            will-change: clip-path;
+        }
+
+        /* Pause the float while hovering so the reveal window stays crisp */
+        .gallery-item:hover .image-wrapper {
+            animation-play-state: paused;
+        }
+
+        /* Reveal Lens (follows the cursor) */
+        .reveal-lens {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 320px;
+            transform: translate(-50%, -50%);
+            border: 1.5px solid #ff6a3d;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .reveal-lens.active {
+            opacity: 1;
+        }
+
+        /* Corner handles */
+        .reveal-lens .corner {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #fff;
+            border: 1.5px solid #ff6a3d;
+        }
+        .reveal-lens .corner.tl { top: -5px; left: -5px; }
+        .reveal-lens .corner.tr { top: -5px; right: -5px; }
+        .reveal-lens .corner.bl { bottom: -5px; left: -5px; }
+        .reveal-lens .corner.br { bottom: -5px; right: -5px; }
+
+        /* "Making it real..." chip */
+        .reveal-lens .lens-label {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-30%);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            background: #1f1f1f;
+            color: #fff;
+            padding: 12px 12px 12px 22px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            white-space: nowrap;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+        }
+
+        .reveal-lens .lens-label .go {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            background: #4f46e5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Slot positions are driven by JS (carousel). These are smooth defaults. */
+        .gallery-item {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+            width: 300px;
+            transition: left 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                        width 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity 0.7s ease;
+        }
+
+        /* Carousel arrows */
+        .car-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            color: #1a1a1a;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 40;
+            transition: all 0.25s ease;
+        }
+
+        .car-arrow:hover {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        .car-arrow.prev { left: 1%; }
+        .car-arrow.next { right: 1%; }
+
+        /* Hover Label */
+        .hover-label {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #1a1a1a;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hover-label::after {
+            content: '→';
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .hover-label {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .gallery-item:hover .hover-label::after {
+            transform: translateX(4px);
+        }
+
+        /* Specific labels */
+        .item-dino .hover-label {
+            background: #843996;
+        }
+
+        .item-car .hover-label {
+            background: #08425c;
+        }
+
+        .item-island .hover-label {
+            background: #843996;
+        }
+
+        /* Description Text */
+        .hero-description {
+            text-align: center;
+            max-width: 700px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-description p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 24px;
+        }
+
+        .hero-description .accent {
+            color: #843996;
+            font-weight: 700;
+        }
+
+        .hero-description .accent-secondary {
+            color: #08425c;
+            font-weight: 700;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: #843996;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(132, 57, 150, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #08425c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(8, 66, 92, 0.4);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(132, 57, 150, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            50% { transform: translateY(-100px) translateX(50px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .gallery-container {
+                height: auto;
+                flex-direction: column;
+                gap: 40px;
+            }
+
+            .gallery-item {
+                position: relative;
+                left: auto !important;
+                right: auto !important;
+                top: auto !important;
+                transform: none !important;
+                width: 80% !important;
+                max-width: 400px;
+            }
+
+            .item-car {
+                order: -1;
+            }
+
+            .grid-bg {
+                width: 100%;
+                height: 100%;
+            }
+
+            nav {
+                padding: 20px;
+            }
+
+            .nav-links {
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .gallery-item {
+                width: 90% !important;
+            }
+        }
+
+        /* Loading animation */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+        .delay-4 { animation-delay: 0.8s; }
+
+        /* ============================ ABOUT US ============================ */
+        .about {
+            position: relative;
+            background: #f5f3f0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* Big morphing blob spans the full viewport width and bleeds off the bottom */
+        .blob-video {
+            position: absolute;
+            left: calc(50% - 50vw);   /* full-viewport width, centred */
+            top: 0;
+            width: 100vw;
+            height: 120%;             /* extra height bleeds below the fold */
+            clip-path: url(#blobClip);
+            animation: blobDrift 16s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .blob-video video {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Dark scrim: heavy on the left (behind text), fading out to the right */
+        .blob-scrim {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                rgba(18, 8, 24, 0.88) 0%,
+                rgba(18, 8, 24, 0.62) 32%,
+                rgba(18, 8, 24, 0.20) 58%,
+                rgba(18, 8, 24, 0.00) 80%);
+        }
+
+        /* Text overlaid on top of the blob */
+        .about-inner {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .about-text { max-width: 540px; }
+
+        .about-text h2 {
+            font-size: clamp(40px, 5vw, 76px);
+            font-weight: 900;
+            line-height: 1.02;
+            letter-spacing: -2px;
+            color: #fff;
+            margin-bottom: 28px;
+        }
+
+        .about-text h2 .hl {
+            display: block;
+            color: #c58be0;
+        }
+
+        .about-text p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.82);
+            margin-bottom: 20px;
+            max-width: 500px;
+        }
+
+        .about-text p strong { color: #7fd4e8; }
+        .about-text .accent { color: #c58be0; font-weight: 700; }
+        .about-text .cta-button { margin-top: 14px; }
+
+        @keyframes blobDrift {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50%      { transform: translateY(-14px) rotate(1deg); }
+        }
+
+        @media (max-width: 768px) {
+            .about-inner { padding: 0 28px; }
+            .blob-scrim {
+                background: linear-gradient(90deg,
+                    rgba(18, 8, 24, 0.85) 0%,
+                    rgba(18, 8, 24, 0.55) 60%,
+                    rgba(18, 8, 24, 0.30) 100%);
+            }
+        }
+
+        /* ============================ COURSES ============================ */
+        .courses {
+            background: #f5f3f0;
+            padding: 100px 60px 140px;
+        }
+
+        .courses-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            gap: 70px;
+            align-items: flex-start;
+        }
+
+        /* Left sticky text (swaps on scroll) */
+        .courses-text {
+            position: sticky;
+            top: 130px;
+            width: 38%;
+            align-self: flex-start;
+            transition: opacity 0.25s ease;
+        }
+
+        .courses-eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #843996;
+            margin-bottom: 22px;
+        }
+
+        .courses-text h2 {
+            font-size: clamp(34px, 3.6vw, 60px);
+            font-weight: 900;
+            line-height: 1.02;
+            letter-spacing: -1.5px;
+            color: #1a1a1a;
+            margin-bottom: 26px;
+        }
+
+        .courses-text h2 .pre { display: block; }
+        .courses-text h2 .hi { display: block; color: #843996; }
+
+        .courses-text p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 30px;
+            max-width: 420px;
+        }
+
+        .course-count {
+            margin-top: 34px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #1a1a1a;
+            letter-spacing: 1px;
+        }
+        .course-count #courseNum { font-size: 30px; color: #843996; }
+        .course-count .cc-sep { color: #aaa; }
+
+        /* Right scrolling card list */
+        .courses-list {
+            width: 62%;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .course-card {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .course-media {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            /* Pixila-style angled bottom-right corner */
+            clip-path: polygon(0 0, 100% 0, 100% 66%, 88% 100%, 0 100%);
+            background: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .course-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.5) saturate(0.9);
+            transform: scale(1.04);
+            transition: filter 0.5s ease, transform 0.6s ease;
+        }
+
+        .course-card.is-active .course-media video,
+        .course-card:hover .course-media video {
+            filter: brightness(1) saturate(1);
+            transform: scale(1);
+        }
+
+        /* Title below each card */
+        .course-info {
+            margin-top: 18px;
+            padding-left: 4px;
+        }
+
+        .course-name {
+            font-size: clamp(22px, 2.2vw, 30px);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            color: #1a1a1a;
+            transition: color 0.35s ease;
+        }
+
+        .course-card.is-active .course-name,
+        .course-card:hover .course-name {
+            color: #843996;
+        }
+
+        .course-type {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        @media (max-width: 900px) {
+            .courses-inner { flex-direction: column; gap: 40px; }
+            .courses-text { position: static; width: 100%; }
+            .courses-list { width: 100%; }
+        }
+
+        /* ============================ TEAM ============================ */
+        .team {
+            position: relative;
+            background: linear-gradient(160deg, #843996 0%, #5e2570 60%, #3f1a4d 100%);
+            /* Tall scroll track that drives the horizontal card movement (longer = slower) */
+            height: 560vh;
+        }
+
+        .team-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Fixed centred text — cards slide over it */
+        .team-head {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(620px, 80%);
+            text-align: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .team-eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #f0b24a;
+            margin-bottom: 14px;
+        }
+
+        .team-head h2 {
+            font-size: clamp(34px, 4.6vw, 64px);
+            font-weight: 900;
+            line-height: 1.04;
+            letter-spacing: -1.5px;
+            color: #fff;
+        }
+        .team-head h2 .hl { color: #f0b24a; }
+
+        .team-intro {
+            margin-top: 22px;
+            font-size: 17px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .team-track-wrap {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .team-track {
+            display: flex;
+            gap: 40px;
+            padding: 0 60px;
+            will-change: transform;
+        }
+
+        .team-card {
+            flex: 0 0 auto;
+            width: clamp(320px, 30vw, 420px);
+            background: rgba(20, 8, 26, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 18px 18px 30px;
+            /* angled bottom-right corner, on-brand with the course cards */
+            clip-path: polygon(0 0, 100% 0, 100% 94%, 95% 100%, 0 100%);
+        }
+
+        .team-photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            clip-path: polygon(0 0, 100% 0, 100% 88%, 88% 100%, 0 100%);
+            background: #1a1a1a;
+            margin-bottom: 20px;
+        }
+
+        .team-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: grayscale(0.15) brightness(0.95);
+            transition: transform 0.6s ease, filter 0.6s ease;
+        }
+
+        .team-card:hover .team-photo img {
+            transform: scale(1.05);
+            filter: grayscale(0) brightness(1);
+        }
+
+        .team-name {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+            padding: 0 6px;
+        }
+
+        .team-role {
+            font-size: 12.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.6px;
+            color: #f0b24a;
+            margin: 8px 6px 16px;
+        }
+
+        .team-bio {
+            font-size: 14.5px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.78);
+            padding: 0 6px;
+        }
+
+        /* Mobile: drop the pin/horizontal scroll, stack vertically */
+        @media (max-width: 900px) {
+            .team { height: auto; }
+            .team-sticky { position: static; height: auto; overflow: visible; padding-bottom: 80px; }
+            .team-head {
+                position: static;
+                transform: none;
+                width: auto;
+                text-align: left;
+                padding: 70px 28px 0;
+                pointer-events: auto;
+            }
+            .team-track-wrap { position: static; overflow: visible; }
+            .team-track {
+                flex-direction: column;
+                gap: 30px;
+                padding: 40px 28px 0;
+                transform: none !important;
+                max-width: 460px;
+            }
+            .team-card { width: 100%; }
+        }
+
+        /* ============================ PRELOADER ============================ */
+        .preloader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: #f5f3f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .pl-svg {
+            width: 130px;
+            height: 130px;
+        }
+        .pl-svg #plFill {
+            transition: y 0.3s ease;   /* smooth rising fill */
+        }
+
+        /* ============================ FAQ ============================ */
+        .faq {
+            background: #f5f3f0;
+            padding: 110px 60px 130px;
+        }
+        .faq-inner {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .faq-eyebrow {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #843996;
+            margin-bottom: 14px;
+        }
+        .faq-title {
+            font-size: clamp(34px, 4vw, 58px);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            color: #1a1a1a;
+            margin-bottom: 50px;
+        }
+        .faq-title .hl { color: #843996; }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(26, 26, 26, 0.12);
+        }
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            font-family: inherit;
+            font-size: clamp(17px, 1.6vw, 20px);
+            font-weight: 600;
+            color: #1a1a1a;
+            padding: 26px 50px 26px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .faq-q:hover { color: #843996; }
+
+        .faq-icon {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            width: 18px;
+            height: 18px;
+            transform: translateY(-50%);
+        }
+        .faq-icon::before,
+        .faq-icon::after {
+            content: '';
+            position: absolute;
+            background: #843996;
+            transition: transform 0.35s ease, opacity 0.35s ease;
+        }
+        .faq-icon::before {  /* horizontal */
+            top: 50%; left: 0;
+            width: 100%; height: 2px;
+            transform: translateY(-50%);
+        }
+        .faq-icon::after {   /* vertical */
+            left: 50%; top: 0;
+            width: 2px; height: 100%;
+            transform: translateX(-50%);
+        }
+        .faq-item.open .faq-icon::after {
+            transform: translateX(-50%) scaleY(0);
+            opacity: 0;
+        }
+
+        .faq-a {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s ease;
+        }
+        .faq-a p {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #555;
+            padding: 0 50px 28px 0;
+            max-width: 760px;
+        }
+
+        .faq-cta {
+            margin-top: 56px;
+            display: block;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .faq { padding: 80px 28px 100px; }
+        }
+
+        /* ============================ FOOTER ============================ */
+        .site-footer {
+            background: linear-gradient(160deg, #843996 0%, #5e2570 55%, #2e1338 100%);
+            color: #fff;
+            overflow: hidden;
+            padding-bottom: 30px;
+        }
+
+        /* Sketchy scrolling marquee */
+        .footer-marquee {
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            padding: 30px 0;
+        }
+        .footer-marquee-track {
+            display: flex;
+            width: max-content;
+            animation: marquee 22s linear infinite;
+        }
+        .footer-marquee .boil {
+            font-size: clamp(48px, 9vw, 130px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1;
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(255,255,255,0.85);
+            white-space: nowrap;
+            display: inline-block;
+            /* hand-drawn "boil" jitter */
+            animation: boil 0.45s steps(2) infinite alternate;
+        }
+        @keyframes marquee {
+            to { transform: translateX(-50%); }
+        }
+        @keyframes boil {
+            0%   { transform: translate(0, 0) rotate(0deg) skewX(0deg); }
+            50%  { transform: translate(1.5px, -1.5px) rotate(-0.5deg) skewX(0.6deg); }
+            100% { transform: translate(-1.5px, 1.5px) rotate(0.5deg) skewX(-0.6deg); }
+        }
+
+        .footer-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 70px 60px 50px;
+            display: flex;
+            justify-content: space-between;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand { max-width: 340px; }
+        .footer-logo {
+            height: 40px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            margin-bottom: 20px;
+        }
+        .footer-brand p {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .footer-cols {
+            display: flex;
+            gap: 70px;
+            flex-wrap: wrap;
+        }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f0b24a;
+            margin-bottom: 18px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 15px;
+            color: rgba(255,255,255,0.82);
+            text-decoration: none;
+            margin-bottom: 12px;
+            transition: color 0.25s ease, transform 0.25s ease;
+        }
+        .footer-col a:hover {
+            color: #fff;
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 24px 60px 0;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        @media (max-width: 768px) {
+            .footer-inner { padding: 50px 28px 40px; gap: 40px; }
+            .footer-cols { gap: 40px; }
+            .footer-bottom { padding: 24px 28px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <svg class="pl-svg" viewBox="0 0 1500 1500" aria-hidden="true">
+            <defs>
+                <clipPath id="plShape">
+                    <path d="M 612.605469 374.761719 C 610.269531 374.8125 608.417969 376.753906 608.464844 379.105469 L 624.472656 1072.539062 C 624.523438 1074.875 626.460938 1076.722656 628.796875 1076.660156 L 863.132812 1070.957031 C 864.296875 1070.925781 865.347656 1070.421875 866.097656 1069.636719 C 866.84375 1068.855469 867.296875 1067.78125 867.273438 1066.617188 L 851.265625 373.171875 C 851.246094 372.039062 850.78125 370.976562 849.960938 370.195312 C 849.140625 369.414062 848.058594 369 846.929688 369.035156 Z"/>
+                    <path d="M 764.113281 189.046875 L 687.023438 190.925781 C 664.898438 191.472656 644.285156 200.597656 628.996094 216.628906 C 613.71875 232.652344 605.574219 253.679688 606.085938 275.800781 L 607.867188 352.894531 C 607.890625 354.023438 608.355469 355.085938 609.171875 355.867188 C 609.984375 356.640625 611.070312 357.054688 612.199219 357.023438 L 846.519531 351.308594 C 847.644531 351.28125 848.71875 350.804688 849.492188 349.992188 C 850.273438 349.171875 850.6875 348.089844 850.65625 346.972656 L 848.875 269.878906 C 848.359375 247.742188 839.265625 227.152344 823.25 211.878906 C 807.25 196.617188 786.246094 188.511719 764.113281 189.046875 Z"/>
+                    <path d="M 628.949219 1092.089844 C 627.46875 1092.132812 626.113281 1092.914062 625.378906 1094.222656 C 624.632812 1095.503906 624.621094 1097.078125 625.351562 1098.382812 L 753.082031 1329.722656 C 753.867188 1331.125 755.351562 1331.957031 756.949219 1331.894531 C 758.078125 1331.851562 759.109375 1331.367188 759.855469 1330.585938 C 760.179688 1330.25 760.441406 1329.832031 760.652344 1329.390625 L 867.25 1092.339844 C 867.847656 1091.011719 867.730469 1089.484375 866.914062 1088.261719 C 866.109375 1087.054688 864.738281 1086.328125 863.285156 1086.375 Z"/>
+                </clipPath>
+            </defs>
+            <g clip-path="url(#plShape)">
+                <rect x="0" y="0" width="1500" height="1500" fill="#e0d2e6"/>
+                <rect id="plFill" x="0" y="1500" width="1500" height="1500" fill="#843996"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fade-in">
+        <a href="#" class="logo">
+            <img src="assets/logo.png" alt="Sketch Factory — Creative Pathshala" class="logo-img">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Grid Background -->
+        <div class="grid-bg"></div>
+
+        <!-- Floating Particles -->
+        <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 20%; top: 60%; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 80%; top: 30%; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 70%; top: 70%; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 40%; top: 80%; animation-delay: 4s;"></div>
+
+        <!-- Title -->
+        <h1 class="hero-title fade-in delay-1">
+            <span class="title-sketch">LEARN TO SKETCH,</span>
+            <span class="title-animate"><span class="highlight">ANIMATE</span>.</span>
+        </h1>
+
+        <!-- Interactive Gallery -->
+        <div class="gallery-container fade-in delay-2">
+
+            <button class="car-arrow prev" id="arrowPrev" aria-label="Previous">←</button>
+            <button class="car-arrow next" id="arrowNext" aria-label="Next">→</button>
+
+            <!-- Dinosaur -->
+            <div class="gallery-item item-dino" data-item="dino">
+                <div class="image-wrapper">
+                    <img src="assets/hero-section-assets/dinosour-sketch.webp" alt="Dinosaur Sketch" class="sketch-img">
+                    <img src="assets/hero-section-assets/dinosour-real.webp" alt="Dinosaur Color" class="color-img">
+                </div>
+            </div>
+
+            <!-- Car -->
+            <div class="gallery-item item-car" data-item="car">
+                <div class="image-wrapper">
+                    <img src="assets/hero-section-assets/car-sketch.webp" alt="Car Sketch" class="sketch-img">
+                    <img src="assets/hero-section-assets/car-real.webp" alt="Car Color" class="color-img">
+                </div>
+            </div>
+
+            <!-- Floating Island -->
+            <div class="gallery-item item-island" data-item="island">
+                <div class="image-wrapper">
+                    <img src="assets/hero-section-assets/landscape-sketch.webp" alt="Island Sketch" class="sketch-img">
+                    <img src="assets/hero-section-assets/landscape-real.webp" alt="Island Color" class="color-img">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Cursor-following reveal lens -->
+        <div class="reveal-lens" id="revealLens">
+            <span class="corner tl"></span>
+            <span class="corner tr"></span>
+            <span class="corner bl"></span>
+            <span class="corner br"></span>
+            <div class="lens-label">Learn to animate this <span class="go">→</span></div>
+        </div>
+
+        <!-- Description -->
+        <div class="hero-description fade-in delay-3">
+            <p>
+                Master animation, design, digital art and <span class="accent">AI-powered</span> creative skills at 
+                <span class="accent-secondary">Assam's</span> leading creative institute. Build a portfolio that opens doors.
+            </p>
+            <a href="#" class="cta-button">Apply Now</a>
+        </div>
+
+    </section>
+
+    <!-- ============================ ABOUT US ============================ -->
+    <section class="about" id="about">
+        <!-- Hidden defs: the morphing blob clip-path -->
+        <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+            <defs>
+                <clipPath id="blobClip" clipPathUnits="objectBoundingBox">
+                    <!-- Full-width panel: straight left/right edges, playful wavy top & bottom -->
+                    <path d="M0,0.03 C0.25,0.00 0.50,0.07 0.75,0.02 C0.85,0.00 0.93,0.05 1,0.02 L1,0.98 C0.75,1.00 0.50,0.93 0.25,0.98 C0.15,1.00 0.07,0.95 0,0.98 Z" />
+                </clipPath>
+            </defs>
+        </svg>
+
+        <!-- Full-vw looping video clipped into the morphing blob (bleeds off the bottom).
+             Plays only while hovered. -->
+        <div class="blob-video">
+            <video id="aboutVideo" src="assets/about-us-section.mp4" loop muted playsinline preload="auto"></video>
+            <div class="blob-scrim"></div>
+        </div>
+
+        <!-- Text overlaid on top of the blob -->
+        <div class="about-inner">
+            <div class="about-text">
+                <h2>WHERE IDEAS<span class="hl">TAKE SHAPE.</span></h2>
+                <p>
+                    At <strong>Sketch Factory</strong>, every great piece starts as a rough line.
+                    We turn raw imagination into polished animation, design and digital art —
+                    one sketch at a time.
+                </p>
+                <p>
+                    Learn from working artists, build a portfolio that stands out, and master the
+                    <span class="accent">AI-powered</span> tools shaping the creative industry today.
+                </p>
+                <a href="#" class="cta-button">About Sketch Factory</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ COURSES ============================ -->
+    <section class="courses" id="courses">
+        <div class="courses-inner">
+            <!-- Sticky text that swaps as you scroll through the cards -->
+            <div class="courses-text" id="coursesText">
+                <span class="courses-eyebrow">Our Courses</span>
+                <h2 id="courseTitle"><span class="pre">DIPLOMA IN</span><span class="hi">2D ANIMATION</span></h2>
+                <p id="courseDesc">Master frame-by-frame motion — character acting, timing and the principles that bring drawings to life. Build a reel that studios notice.</p>
+                <a href="#" class="cta-button" id="courseCta">Enroll Now</a>
+                <div class="course-count"><span id="courseNum">01</span> <span class="cc-sep">/ 05</span></div>
+            </div>
+
+            <!-- Scrolling list of course cards -->
+            <div class="courses-list" id="coursesList">
+                <article class="course-card is-active" data-index="0">
+                    <div class="course-media">
+                        <video src="assets/diploma-in-2d-animation.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-name">Diploma in 2D Animation</h3>
+                        <p class="course-type">Diploma Program</p>
+                    </div>
+                </article>
+
+                <article class="course-card" data-index="1">
+                    <div class="course-media">
+                        <video src="assets/diploma-in-2d-animation.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-name">Diploma in 2D Animation Film Making</h3>
+                        <p class="course-type">Diploma Program</p>
+                    </div>
+                </article>
+
+                <article class="course-card" data-index="2">
+                    <div class="course-media">
+                        <video src="assets/diploma-in-2d-animation.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-name">Diploma in Graphic Design</h3>
+                        <p class="course-type">Diploma Program</p>
+                    </div>
+                </article>
+
+                <article class="course-card" data-index="3">
+                    <div class="course-media">
+                        <video src="assets/diploma-in-2d-animation.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-name">Generative AI Course</h3>
+                        <p class="course-type">Certification Course</p>
+                    </div>
+                </article>
+
+                <article class="course-card" data-index="4">
+                    <div class="course-media">
+                        <video src="assets/diploma-in-2d-animation.mp4" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="course-info">
+                        <h3 class="course-name">Creative Art Class</h3>
+                        <p class="course-type">Hands-on Class</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ TEAM ============================ -->
+    <section class="team" id="team">
+        <div class="team-sticky">
+            <div class="team-head">
+                <span class="team-eyebrow">Our Team</span>
+                <h2>THE MINDS BEHIND <span class="hl">THE FACTORY</span></h2>
+                <p class="team-intro">A crew of award-winning artists, animators and educators shaping the next generation of creative talent.</p>
+            </div>
+
+            <div class="team-track-wrap">
+                <div class="team-track" id="teamTrack">
+                    <article class="team-card">
+                        <div class="team-photo">
+                            <img src="assets/abhijeet-sharma-founder.jpg" alt="Abhijeet Sharma">
+                        </div>
+                        <h3 class="team-name">Abhijeet Sharma</h3>
+                        <p class="team-role">Founder &amp; Center Director</p>
+                        <p class="team-bio">An award-winning creative professional with 20+ years of expertise in digital art, animation, film direction, and branding. Known for his acclaimed work on the Assamese feature film WHY, he has led projects for global brands like Disney, Sony Yay, Pepsi, and Oxford University Press, while mentoring young creative talent across the industry.</p>
+                    </article>
+
+                    <article class="team-card">
+                        <div class="team-photo">
+                            <img src="assets/purvi-sharma-cofounder-managing-director.png" alt="Purvi Sharma">
+                        </div>
+                        <h3 class="team-name">Purvi Sharma</h3>
+                        <p class="team-role">Co-Founder &amp; Managing Director</p>
+                        <p class="team-bio">A post-graduate in Filmmaking, she describes herself as a unique right-brain/left-brain blend — equally passionate about creativity and structure. She consumes content ardently and believes in building transparent, merit-driven creative cultures that allow ideas to flourish.</p>
+                    </article>
+
+                    <article class="team-card">
+                        <div class="team-photo">
+                            <img src="assets/mrinmoy-deka-centre-and-academic-head.jpg" alt="Mrinmoy Deka">
+                        </div>
+                        <h3 class="team-name">Mrinmoy Deka</h3>
+                        <p class="team-role">Centre &amp; Academic Head</p>
+                        <p class="team-bio">An international award-winning 2D animator and pre-production artist, best known for directing the internationally acclaimed short film MAA. With 17+ years of industry experience on projects like Bal Hanuman and Shin-Chan, he has also served as Academic Head and mentor at leading animation institutes, shaping future animation talent while leading creative teams with innovation and excellence.</p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="faq" id="faq">
+        <div class="faq-inner">
+            <span class="faq-eyebrow">FAQ</span>
+            <h2 class="faq-title">Questions, <span class="hl">answered.</span></h2>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-q">What is Sketch Factory?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>Sketch Factory is Assam's creative pathshala — an institute teaching animation, design, digital art and AI-powered creative skills. We help students build industry-ready portfolios through hands-on, mentor-led training.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">What courses do you offer?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>We run a Diploma in 2D Animation, a Diploma in 2D Animation Film Making, a Diploma in Graphic Design, a Generative AI course, and a Creative Art class — covering everything from foundational drawing to professional production.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Do I need prior experience to enroll?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>Not at all. Our foundation courses start from the basics, while advanced tracks are designed for those who already have some skills. We meet you where you are and take you further.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">How long are the diploma programs?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>Diploma durations vary by program, typically ranging from several months to a year. Reach out and we'll share the detailed schedule and batch timings for the course you're interested in.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Will I learn AI-powered creative tools?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>Yes. Generative AI is woven through our curriculum. You'll learn to use AI image, video and motion tools to speed up your workflow and push your creative ideas further — skills the industry is actively hiring for.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Do you help with placements and portfolios?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>Building a standout portfolio is central to every course, and our mentors — working artists themselves — guide you on showcasing your work and connecting with studios and clients.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q">Where is Sketch Factory located?<span class="faq-icon"></span></button>
+                    <div class="faq-a"><p>We're based in Assam. Get in touch through the contact details below and our team will help you with admissions, fees and campus visits.</p></div>
+                </div>
+            </div>
+
+            <a href="#" class="cta-button faq-cta">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- ============================ FOOTER ============================ -->
+    <footer class="site-footer" id="contact">
+        <!-- Sketchy scrolling marquee -->
+        <div class="footer-marquee" aria-hidden="true">
+            <div class="footer-marquee-track">
+                <span class="boil">LEARN&nbsp;·&nbsp;SKETCH&nbsp;·&nbsp;ANIMATE&nbsp;·&nbsp;CREATE&nbsp;·&nbsp;</span>
+                <span class="boil">LEARN&nbsp;·&nbsp;SKETCH&nbsp;·&nbsp;ANIMATE&nbsp;·&nbsp;CREATE&nbsp;·&nbsp;</span>
+            </div>
+        </div>
+
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="assets/logo.png" alt="Sketch Factory" class="footer-logo">
+                <p>Assam's creative pathshala — learn to sketch, animate &amp; bring ideas to life.</p>
+            </div>
+
+            <div class="footer-cols">
+                <div class="footer-col">
+                    <h4>Explore</h4>
+                    <a href="#about">About Us</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#team">Team</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Connect</h4>
+                    <a href="#">Instagram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Behance</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Reach Us</h4>
+                    <a href="mailto:hello@sketchfactory.in">hello@sketchfactory.in</a>
+                    <a href="#">Guwahati, Assam</a>
+                    <a href="#">+91 00000 00000</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <span>© 2026 Sketch Factory — Creative Pathshala</span>
+            <span>Developed & Designed By OpenDev</span>
+        </div>
+    </footer>
+
+    <script>
+        const LENS = 320;              // lens square size (must match CSS width/height)
+        const HALF = LENS / 2;
+        const lens = document.getElementById('revealLens');
+        const items = Array.from(document.querySelectorAll('.gallery-item'));
+
+        /* ---------- Pre-decode every image so the reveal never "loads in" ---------- */
+        items.forEach(item => {
+            item.querySelectorAll('img').forEach(img => {
+                if (img.decode) img.decode().catch(() => {});
+            });
+        });
+
+        /* ---------------------------- Carousel ----------------------------------- */
+        // Three slots: 0 = left, 1 = centre, 2 = right
+        const SLOTS = [
+            { left: '16%', width: 300, z: 2, op: 1 },   // left
+            { left: '50%', width: 580, z: 5, op: 1 },   // centre (featured)
+            { left: '84%', width: 300, z: 2, op: 1 }    // right
+        ];
+        // order[i] = index of the item currently in slot i
+        let order = [0, 1, 2];
+
+        function layout() {
+            order.forEach((itemIdx, slot) => {
+                const s = SLOTS[slot];
+                const el = items[itemIdx];
+                el.style.left = s.left;
+                el.style.width = s.width + 'px';
+                el.style.zIndex = s.z;
+                el.style.opacity = s.op;
+                el.classList.toggle('is-center', slot === 1);
+            });
+        }
+
+        function rotate(dir) {
+            // dir = 1 → next (everything shifts left), dir = -1 → prev
+            if (dir === 1) order.push(order.shift());
+            else order.unshift(order.pop());
+            layout();
+        }
+
+        document.getElementById('arrowNext').addEventListener('click', () => rotate(1));
+        document.getElementById('arrowPrev').addEventListener('click', () => rotate(-1));
+
+        // Click a side image to bring it to the centre
+        items.forEach((item, idx) => {
+            item.addEventListener('click', () => {
+                const slot = order.indexOf(idx);
+                if (slot === 0) rotate(-1);
+                else if (slot === 2) rotate(1);
+            });
+        });
+
+        layout();
+
+        /* ------------------- Smooth cursor reveal lens (rAF) --------------------- */
+        let activeItem = null;
+        let pointer = { x: 0, y: 0 };       // latest cursor
+        let lensPos = { x: 0, y: 0 };       // eased lens position
+
+        function clipFor(item, px, py) {
+            const rect = item.querySelector('.color-img').getBoundingClientRect();
+            const cx = px - rect.left;
+            const cy = py - rect.top;
+            const top    = Math.max(0, cy - HALF);
+            const bottom = Math.max(0, rect.height - (cy + HALF));
+            const left   = Math.max(0, cx - HALF);
+            const right  = Math.max(0, rect.width - (cx + HALF));
+            return `inset(${top}px ${right}px ${bottom}px ${left}px)`;
+        }
+
+        function tick() {
+            // Ease the lens toward the cursor for a smooth, weighty feel
+            lensPos.x += (pointer.x - lensPos.x) * 0.25;
+            lensPos.y += (pointer.y - lensPos.y) * 0.25;
+
+            lens.style.left = lensPos.x + 'px';
+            lens.style.top  = lensPos.y + 'px';
+
+            if (activeItem) {
+                activeItem.querySelector('.color-img').style.clipPath =
+                    clipFor(activeItem, lensPos.x, lensPos.y);
+            }
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+
+        document.addEventListener('mousemove', (e) => {
+            pointer.x = e.clientX;
+            pointer.y = e.clientY;
+        });
+
+        items.forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                activeItem = item;
+                lens.classList.add('active');
+            });
+            item.addEventListener('mouseleave', () => {
+                item.querySelector('.color-img').style.clipPath = 'inset(50% 50% 50% 50%)';
+                if (activeItem === item) activeItem = null;
+                lens.classList.remove('active');
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            if (activeItem) {
+                activeItem.querySelector('.color-img').style.clipPath = 'inset(50% 50% 50% 50%)';
+                activeItem = null;
+                lens.classList.remove('active');
+            }
+        });
+
+        /* About video: play only while hovering the section (grass moves on hover) */
+        const aboutVideo = document.getElementById('aboutVideo');
+        const aboutSection = document.getElementById('about');
+        if (aboutVideo && aboutSection) {
+            aboutSection.addEventListener('mouseenter', () => {
+                const p = aboutVideo.play();
+                if (p) p.catch(() => {});
+            });
+            aboutSection.addEventListener('mouseleave', () => {
+                aboutVideo.pause();
+            });
+        }
+
+        /* Courses: swap the sticky left text to match the card in view */
+        (function () {
+            const courseData = [
+                { pre: 'DIPLOMA IN', hi: '2D ANIMATION', desc: 'Master frame-by-frame motion — character acting, timing and the principles that bring drawings to life. Build a reel that studios notice.' },
+                { pre: 'DIPLOMA IN 2D ANIMATION', hi: 'FILM MAKING', desc: 'Take your animation further: storyboarding, direction, sound and editing to craft complete, festival-ready animated films from concept to final cut.' },
+                { pre: 'DIPLOMA IN', hi: 'GRAPHIC DESIGN', desc: 'Learn layout, typography, branding and the industry tools to design visuals that communicate — for print, screen and everything in between.' },
+                { pre: 'GENERATIVE', hi: 'AI COURSE', desc: 'Harness AI image, video and motion tools to supercharge your creative workflow and produce striking work faster than ever before.' },
+                { pre: 'CREATIVE', hi: 'ART CLASS', desc: 'Build a strong artistic foundation — drawing, colour, composition and observation — the bedrock skills behind every great visual artist.' }
+            ];
+
+            const textEl  = document.getElementById('coursesText');
+            const titleEl = document.getElementById('courseTitle');
+            const descEl  = document.getElementById('courseDesc');
+            const numEl   = document.getElementById('courseNum');
+            const cards   = Array.from(document.querySelectorAll('.course-card'));
+            if (!textEl || !cards.length) return;
+
+            let current = 0;
+            let raf = null;
+
+            function apply(i) {
+                if (i === current) return;
+                current = i;
+                cards.forEach((c, idx) => c.classList.toggle('is-active', idx === i));
+
+                const c = courseData[i];
+                textEl.style.opacity = '0';
+                setTimeout(() => {
+                    titleEl.innerHTML = `<span class="pre">${c.pre}</span><span class="hi">${c.hi}</span>`;
+                    descEl.textContent = c.desc;
+                    numEl.textContent = String(i + 1).padStart(2, '0');
+                    textEl.style.opacity = '1';
+                }, 180);
+            }
+
+            function onScroll() {
+                if (raf) return;
+                raf = requestAnimationFrame(() => {
+                    raf = null;
+                    const mid = window.innerHeight / 2;
+                    let best = 0, bestDist = Infinity;
+                    cards.forEach((card, idx) => {
+                        const r = card.getBoundingClientRect();
+                        const dist = Math.abs((r.top + r.bottom) / 2 - mid);
+                        if (dist < bestDist) { bestDist = dist; best = idx; }
+                    });
+                    apply(best);
+                });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+        })();
+
+        /* Team: scroll-pinned horizontal track. Cards start off-screen left and
+           slide in / across to the right as you scroll through the section. */
+        (function () {
+            const section = document.getElementById('team');
+            const track = document.getElementById('teamTrack');
+            if (!section || !track) return;
+
+            let trackW = 0, viewportW = 0, current = null;
+
+            function measure() {
+                trackW = track.scrollWidth;
+                viewportW = window.innerWidth;
+            }
+
+            function update() {
+                if (window.innerWidth <= 900) { track.style.transform = ''; return; }
+                const rect = section.getBoundingClientRect();
+                const scrollable = section.offsetHeight - window.innerHeight;
+                // progress 0 (section top hits viewport top) -> 1 (bottom reached)
+                let p = -rect.top / scrollable;
+                p = Math.max(0, Math.min(1, p));
+                // start: track fully off the left (right edge at x=0) -> translateX(-trackW)
+                // end:   track fully off the right -> translateX(viewportW)
+                const x = -trackW + p * (trackW + viewportW);
+                track.style.transform = `translate3d(${x}px,0,0)`;
+            }
+
+            let ticking = false;
+            function onScroll() {
+                if (ticking) return;
+                ticking = true;
+                requestAnimationFrame(() => { ticking = false; update(); });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            window.addEventListener('resize', () => { measure(); update(); });
+            measure();
+            update();
+        })();
+
+        /* Preloader: fill the icon as the page loads, then reveal the site */
+        (function () {
+            const pre = document.getElementById('preloader');
+            const fill = document.getElementById('plFill');
+            if (!pre || !fill) return;
+
+            let pct = 0;
+            const start = Date.now();
+            const MIN_MS = 1400;  // keep the animation on screen at least this long
+            const setFill = (p) => fill.setAttribute('y', String(1500 * (1 - p / 100)));
+
+            // Simulated progress that creeps up while assets load
+            const creep = setInterval(() => {
+                pct = Math.min(pct + Math.random() * 12, 90);
+                setFill(pct);
+            }, 160);
+
+            function finish() {
+                clearInterval(creep);
+                setFill(100);
+                const wait = Math.max(0, MIN_MS - (Date.now() - start));
+                setTimeout(() => {
+                    pre.classList.add('hidden');
+                    setTimeout(() => pre.remove(), 700);
+                }, wait + 250);
+            }
+
+            if (document.readyState === 'complete') finish();
+            else window.addEventListener('load', finish);
+        })();
+
+        /* FAQ accordion */
+        document.querySelectorAll('.faq-item').forEach((item) => {
+            const q = item.querySelector('.faq-q');
+            const a = item.querySelector('.faq-a');
+            q.addEventListener('click', () => {
+                const isOpen = item.classList.contains('open');
+                // close others
+                document.querySelectorAll('.faq-item.open').forEach((other) => {
+                    if (other !== item) {
+                        other.classList.remove('open');
+                        other.querySelector('.faq-a').style.maxHeight = null;
+                    }
+                });
+                if (isOpen) {
+                    item.classList.remove('open');
+                    a.style.maxHeight = null;
+                } else {
+                    item.classList.add('open');
+                    a.style.maxHeight = a.scrollHeight + 'px';
+                }
+            });
+        });
+
+        /* Smooth scroll for in-page anchors */
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+
+</body>
+</html>
